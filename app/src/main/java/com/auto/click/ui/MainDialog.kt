@@ -1,11 +1,7 @@
 package com.auto.click.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.AnchoredDraggableState
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.anchoredDraggable
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,7 +39,6 @@ import com.auto.click.ui.common.CheckboxAndText
 import com.auto.click.ui.common.DeleteDialog
 import com.auto.click.ui.common.HeightSpace
 import com.auto.click.ui.common.RequiredOutlinedTextField
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.compose.koinInject
 
@@ -180,6 +175,7 @@ private fun AddOrEditDialog(
                         isRandomDuration = isRandomDuration,
                     )
                 )
+                onDismiss()
             }) {
             Text(text = "保存")
         }
@@ -191,7 +187,7 @@ private fun AddOrEditDialog(
                 }
                 if (isShowDeleteDialog) {
                     DeleteDialog(
-                        content = "请确认是否要删除该人脸信息",
+                        content = "请确认是否要删除该脚本",
                         onDismissRequest = { isShowDeleteDialog = false },
                         onConfirmClick = {
                             onDelete(it)
@@ -204,7 +200,6 @@ private fun AddOrEditDialog(
                     Text(text = "删除")
                 }
             }
-            Spacer(modifier = Modifier.width(100.dp))
             TextButton(onClick = onDismiss) {
                 Text(text = "取消")
             }

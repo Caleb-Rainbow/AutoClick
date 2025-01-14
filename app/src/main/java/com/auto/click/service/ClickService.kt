@@ -5,6 +5,7 @@ import android.accessibilityservice.GestureDescription
 import android.graphics.Path
 import android.view.accessibility.AccessibilityEvent
 import com.auto.click.data.script.mode.Script
+import com.auto.click.data.script.mode.ScriptPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -35,11 +36,12 @@ class ClickService: AccessibilityService() {
         _serviceState.update { false }
     }
 
-    fun slide(onCompleted: () -> Unit){
+    fun slide(script: Script, scriptPointList:List<ScriptPoint>, onCompleted: () -> Unit = {}){
+        if (scriptPointList.size != 2) return
         val path = Path()
-        path.moveTo(200f,300f)
-        path.lineTo(200f,1000f)
-        val description = GestureDescription.StrokeDescription(path,0,500)
+        path.moveTo(scriptPointList[0].x,scriptPointList[0].y)
+        path.lineTo(scriptPointList[1].x,scriptPointList[1].y)
+        val description = GestureDescription.StrokeDescription(path,0,script.duration)
         dispatchGesture(GestureDescription.Builder().addStroke(description).build(),object : GestureResultCallback() {
             override fun onCompleted(gestureDescription: GestureDescription?) {
                 super.onCompleted(gestureDescription)

@@ -2,6 +2,7 @@ package com.auto.click.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.auto.click.data.script.ScriptRepository
 import com.auto.click.data.script.mode.Script
 import com.auto.click.service.ClickService
@@ -21,7 +22,7 @@ import org.koin.android.annotation.KoinViewModel
  * @create 2025/1/6 10:54
  **/
 data class UiState(
-    val scripts:Flow<List<Script>>? = null,
+    val scripts:Flow<PagingData<Script>>? = null,
     val isShowAddDialog:Boolean = false,
     val selectedScript:Script? = null
 )
@@ -38,20 +39,20 @@ class MainViewModel(
         initScripts()
     }
 
-    fun showRunningControlWindow(){
-        runningControlWindow.show()
+    fun showRunningControlWindow(script: Script){
+        runningControlWindow.show(script)
     }
-    fun hideRunningControlWindow(){
-        runningControlWindow.hide()
+    fun hideRunningControlWindow(script: Script){
+        runningControlWindow.hide(script.id.toString())
     }
-    fun cancelRunningControlWindow(){
-        runningControlWindow.cancel()
+    fun cancelRunningControlWindow(script: Script){
+        runningControlWindow.cancel(script.id.toString())
     }
     private fun initScripts(){
         viewModelScope.launch(ioDispatcher) {
             _uiState.update {
                 it.copy(
-                    scripts = scriptRepository.getAllFlow()
+                    scripts = scriptRepository.pagingSource().flow
                 )
             }
         }

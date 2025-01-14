@@ -11,7 +11,7 @@ ksp = "2.1.0-1.0.29"
 floatingx = "2.3.3"
 room = "2.6.1"
 paging = "3.3.5"
-serialization = "1.7.3"
+serialization = "1.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
