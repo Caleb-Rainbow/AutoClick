@@ -1,0 +1,82 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "7fb39699a366f904061b31caf5f0ed73",
+    "entities": [
+      {
+        "tableName": "Script",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `points` TEXT NOT NULL, `delay` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `numberOfRuns` INTEGER NOT NULL, `isRandomLocation` INTEGER NOT NULL, `isRandomDelay` INTEGER NOT NULL, `isRandomDuration` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "points",
+            "columnName": "points",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "delay",
+            "columnName": "delay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "numberOfRuns",
+            "columnName": "numberOfRuns",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isRandomLocation",
+            "columnName": "isRandomLocation",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isRandomDelay",
+            "columnName": "isRandomDelay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isRandomDuration",
+            "columnName": "isRandomDuration",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7fb39699a366f904061b31caf5f0ed73')"
+    ]
+  }
+}
