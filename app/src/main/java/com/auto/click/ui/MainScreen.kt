@@ -100,7 +100,6 @@ private fun PermissionCheck(modifier: Modifier, serviceState: Boolean) {
 
 @Composable
 private fun ScriptList(list: LazyPagingItems<Script>, onClick: (Script) -> Unit, showScript: (Script) -> Unit) {
-    val context = LocalContext.current
     OutlinedCard(
         modifier = Modifier.padding(horizontal = 15.dp)
     ) {
