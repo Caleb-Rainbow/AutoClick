@@ -42,12 +42,12 @@ class MainViewModel(
     fun showRunningControlWindow(script: Script){
         runningControlWindow.show(script)
     }
-    fun hideRunningControlWindow(script: Script){
+   /* fun hideRunningControlWindow(script: Script){
         runningControlWindow.hide(script.id.toString())
     }
     fun cancelRunningControlWindow(script: Script){
         runningControlWindow.cancel(script.id.toString())
-    }
+    }*/
     private fun initScripts(){
         viewModelScope.launch(ioDispatcher) {
             _uiState.update {
