@@ -2,17 +2,17 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7fb39699a366f904061b31caf5f0ed73",
+    "identityHash": "3563896617d046f74ed902781182a808",
     "entities": [
       {
         "tableName": "Script",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `points` TEXT NOT NULL, `delay` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `numberOfRuns` INTEGER NOT NULL, `isRandomLocation` INTEGER NOT NULL, `isRandomDelay` INTEGER NOT NULL, `isRandomDuration` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `points` TEXT NOT NULL, `delay` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `numberOfRuns` INTEGER NOT NULL, `isRandomLocation` INTEGER NOT NULL, `isRandomDelay` INTEGER NOT NULL, `isRandomDuration` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "name",
@@ -76,7 +76,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7fb39699a366f904061b31caf5f0ed73')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3563896617d046f74ed902781182a808')"
     ]
   }
 }

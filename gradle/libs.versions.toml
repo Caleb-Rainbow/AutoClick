@@ -1,17 +1,17 @@
 [versions]
-agp = "8.6.1"
-kotlin = "2.1.0"
+agp = "8.8.0"
+kotlin = "2.1.10"
 coreKtx = "1.15.0"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.9.3"
-composeBom = "2024.12.01"
-koin = "4.1.0-Beta1"
-koin-annotations = "2.0.0-Beta2"
+activityCompose = "1.10.0"
+composeBom = "2025.01.01"
+koin = "4.1.0-Beta5"
+koin-annotations = "2.0.0-Beta3"
 ksp = "2.1.0-1.0.29"
 floatingx = "2.3.3"
 room = "2.6.1"
 paging = "3.3.5"
-serialization = "1.7.3"
+serialization = "1.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

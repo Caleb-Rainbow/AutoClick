@@ -1,6 +1,7 @@
 package com.auto.click.ui.common
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -15,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -23,7 +26,21 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.auto.click.R
 
+@Composable
+fun CommonImage(
+    modifier: Modifier = Modifier,
+    imageUrl: Any = R.drawable.image_default,
+    contentScale: ContentScale = ContentScale.Fit
+) {
+    Image(
+        painter = painterResource(id = imageUrl.toString().toInt()),
+        modifier = modifier,
+        contentScale = contentScale,
+        contentDescription = null
+    )
+}
 
 /**
  * 带有必选符号的输入框
@@ -73,19 +90,22 @@ fun RequiredOutlinedTextField(
 }
 
 @Composable
-fun CheckboxAndText(modifier: Modifier = Modifier,text:String,checked:Boolean,onCheckedChange: (Boolean) -> Unit){
-    Row(modifier = modifier.toggleable(value = checked, onValueChange = onCheckedChange, role = Role.Checkbox), verticalAlignment = Alignment.CenterVertically) {
+fun CheckboxAndText(modifier: Modifier = Modifier, text: String, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
+    Row(
+        modifier = modifier.toggleable(value = checked, onValueChange = onCheckedChange, role = Role.Checkbox),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Checkbox(checked = checked, onCheckedChange = null)
         Text(modifier = Modifier.padding(vertical = 5.dp), text = text)
     }
 }
 
 @Composable
-fun WidthSpace(width: Dp){
+fun WidthSpace(width: Dp) {
     Spacer(modifier = Modifier.width(width))
 }
 
 @Composable
-fun HeightSpace(height: Dp){
+fun HeightSpace(height: Dp) {
     Spacer(modifier = Modifier.height(height))
 }
