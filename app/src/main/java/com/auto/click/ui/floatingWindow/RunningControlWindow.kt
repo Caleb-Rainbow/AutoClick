@@ -36,6 +36,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.koin.compose.koinInject
 import org.koin.core.annotation.Single
+import kotlin.coroutines.cancellation.CancellationException
+import kotlin.random.Random
 
 /**
  * @description
@@ -76,7 +78,7 @@ class RunningControlWindow(private val context: Application) {
 }
 
 @Composable
-private fun RunningControlWindow(script: Script, json: Json = koinInject()) {
+private fun RunningControlWindow(script: Script, json: Json = koinInject(),runningControlWindow: RunningControlWindow = koinInject()) {
     val points = remember {
         json.decodeFromString<List<ScriptPoint>>(script.points)
     }
@@ -95,7 +97,9 @@ private fun RunningControlWindow(script: Script, json: Json = koinInject()) {
             if (isRunning) {
                 stopScript(job) { job = null }
             } else {
-                startScript(script, points,scope) { job = it }
+                startScript(script, points,scope, onStart = {
+                    job = it
+                }) { job = null }
             }
         }
     ) {
@@ -103,7 +107,7 @@ private fun RunningControlWindow(script: Script, json: Json = koinInject()) {
             Icon(imageVector = if (isRunning) Icons.Default.Stop else Icons.Default.PlayArrow, contentDescription = null)
             Text(text = script.name)
             IconButton(onClick = {
-                FloatingX.control(script.id.toString()).cancel()
+                runningControlWindow.cancel(script.id.toString())
             }) {
                 Icon(imageVector = Icons.Default.Close, contentDescription = null)
             }
@@ -116,25 +120,45 @@ private fun stopScript(job: Job?, onStop: () -> Unit) {
     onStop()
 }
 
-private fun startScript(script: Script, points: List<ScriptPoint>, scope: CoroutineScope, onStart: (Job) -> Unit) {
+private fun startScript(
+    script: Script,
+    points: List<ScriptPoint>,
+    scope: CoroutineScope,
+    onStart: (Job) -> Unit,
+    onCompleted: () -> Unit = {},
+    onError: (Throwable) -> Unit = {}
+) {
     val newJob = scope.launch(Dispatchers.IO) {
         try {
-            if (script.numberOfRuns == 0) {
-                while (isActive) {
-                    delay(script.delay)
-                    ClickService.service?.slide(script = script, scriptPointList = points)
-                }
-            } else {
-                for (i in 0 until script.numberOfRuns) {
-                    delay(script.delay)
-                    ClickService.service?.slide(script = script, scriptPointList = points)
-                }
-            }
-        } catch (e: Exception) {
-            //  错误处理
-        } finally {
+            runScriptLogic(script, points)
+            onCompleted()
+        } catch (e: CancellationException) {
+            println("Job Cancelled.")
+        }catch (e: Exception) {
+            onError(e)
         }
     }
     onStart(newJob)
+}
+
+private suspend fun CoroutineScope.runScriptLogic(script: Script, points: List<ScriptPoint>) {
+    val delay = if (script.isRandomDelay) Random.nextLong(script.delay - 51, script.delay + 51) else script.delay
+
+    if (script.numberOfRuns == 0) {
+        while (isActive) {
+            delay(delay)
+            executeScriptAction(script, points)
+        }
+    } else {
+        repeat(script.numberOfRuns) {
+            delay(delay)
+            executeScriptAction(script,points)
+        }
+    }
+}
+
+
+private fun executeScriptAction(script: Script, points: List<ScriptPoint>) {
+    ClickService.service?.slide(script = script, scriptPointList = points)
 }
 
