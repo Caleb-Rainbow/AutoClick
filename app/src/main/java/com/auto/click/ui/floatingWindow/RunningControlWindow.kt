@@ -99,7 +99,6 @@ private fun RunningControlWindow(script: Script, json: Json = koinInject(),runni
             } else {
                 startScript(script, points,scope, onStart = {
                     job = it
-                }) { job = null }
             }
         }
     ) {
